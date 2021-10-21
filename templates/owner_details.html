@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .owner_data {
+            border: 5px solid navy;
+            padding: 20px;
+            margin: 20px
+        }
+
+        .btn-grid {
+            display: flex;
+        }
+
+        .btn {
+            flex: 1;
+            height: 50px;
+            color: white;
+        }
+
+        .btn-view{
+            background-color: navy;
+        }
+
+        .btn-edit {
+            background-color: navy;
+        }
+
+        .btn-cedit {
+            background-color: navy;
+            color: white;
+        }
+
+        .btn-del {
+            background-color:navy;
+        }
+
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+        body {
+            background: #f2f2f2;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .search {
+            width: 90%;
+            position: relative;
+            display: flex;
+            margin: 20px
+        }
+
+        .searchTerm {
+            width: 100%;
+            border: 3px solid navy;
+            border-right: none;
+            padding: 5px;
+            height: 20px;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            color: #9DBFAF;
+        }
+
+        .searchTerm:focus {
+            color: navy;
+        }
+
+        .searchButton {
+            width: 80px;
+            height: 36px;
+            border: 1px solid WHITE;
+            background:navy;
+            text-align: center;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        table, th, td{
+            border: 1px solid black;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;"><b>OWNER DETAILS</b></h1>
+    <div class="search">
+
+        <form action="" class="container" method="POST">
+            <input type="text" class="searchTerm" placeholder="What are you looking for?" name="search">
+            <input type="submit" value="search" class="searchButton" />
+            <i class="fa fa-search"></i>
+        </form>
+
+        <!-- </form> -->
+    </div>
+    <form>
+        <input  type="button" style="margin:20px; background-color: navy; color: oldlace; " 
+        onclick="window.location.href='http://127.0.0.1:5000/dashboard/KADOC069';" value="GO BACK"/>
+      </form>
+    {% if o_data == [] %}
+    <h1 style="text-align: center; padding-top: 50px;">SEARCH NOT FOUND</h1>
+    {% else %}
+    {% for i in o_data %}
+    <div class="owner_data">
+        <h2><b> {{ i[1] }} </b></h2>
+        <h3><b>ID:</b> {{ i[0] }}</h3>
+        <h2>Contact:</h2>
+        <b>Phone:</b> {{ i[2] }}<br>
+        <b>Address:</b> {{ i[3] }}<br>
+        <b>Email Id:</b> {{ i[4] }}<br>
+
+        <h2>Cattle Details:</h2>
+        
+
+        <table style="width:100%">
+            <tr>
+                <th>CATTLE ID</th>
+                <th>AGE</th>
+                <th>BREED</th>
+            </tr>
+            {% for j in c_data%}
+            {% if i[0] == j[1]%}
+            <tr>
+                <td>{{ j[0] }}</td>
+                <td>{{ j[2] }}</td>
+                <td>{{ j[3] }}</td>
+                <td>
+                   
+                    <a href="/update-cattle/{{ j[0] }}"><button class="btn btn-cedit">EDIT CATTLE DETAILS</button></a>
+                    <a href="/cattle/{{ j[0] }}"><button class="btn btn-view">VIEW MORE</button></a>
+                    <a href="/delete-cattle/{{ j[0] }}"><button class="btn btn-del">DELETE</button></a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+
+        <br>
+        <div class="btn-grid">
+            
+            <a href="/add-cattle/{{ i[0] }}"><button class="btn btn-cedit">ADD CATTLE DETAILS</button></a>
+            <a href="/update/{{ i[0] }}"><button class="btn btn-edit">EDIT OWNER DETAILS</button></a>
+            <a href="/delete/{{ i[0] }}"><button class="btn btn-del">DELETE</button></a>
+        </div>
+        
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</body>
+
+</html>

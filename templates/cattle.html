@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table, td, th{
+            border: solid 2px black;
+            border-collapse:collapse;
+        }
+
+        .del-btn{
+            background-color: navy;
+            color: white;
+        }
+        .add-btn{
+            background-color: navy;
+            color: white;
+        }
+
+        .container{
+            border: blue solid 5px;
+            padding: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>CATTLE ID: {{ cattle_data[0] }}</h2>
+    <h2>OWNER ID: {{ cattle_data[1] }}</h2>
+    <h2>AGE: {{ cattle_data[2] }}</h2>
+    
+    <table style="width:100%">
+        <tr>
+            <th>MEDICINE ID</th>
+            <th>MEDICATION NAME</th>
+            <th>MEDICATION DATE</th>
+            <th></th>
+        </tr>
+        {% for i in medication_data%}
+        {% if cattle_data[0] == i[0] %}
+        <tr>
+            <td>{{ i[3] }}</td>
+            <td>{{ i[1] }}</td>
+            <td>{{ i[2] }}</td>
+            <!-- <td>{{ medication_data[2] }}</td> -->
+            <td>
+                <!-- <a href="/del-meds/{{ cattle_data[0] }}"><button class="btn btn-view"></button></a> -->
+                <a href="/delete/{{ cattle_data[0] }}/{{ i[3] }}"><button class="del-btn">DEL MEDICATION</button></a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        
+        <tr>
+            <form action="{{ cattle_data[0] }}" method="POST">
+                <td><input type="text" placeholder="ENTER MED ID" name="s_no" required></td>
+                <td><input type="text" placeholder="ENTER MED NAME" name="name" required></td>
+                <td><input type="text" placeholder="ENTER MED DATE" name="date" required></td>
+                <!-- <td><input type="text" placeholder="ENTER" name="id_{{ k }}" required></td> -->
+                <td><button class="add-btn">ADD NEW MEDS</button></td>
+            </form>
+        </tr>
+    
+    </table>
+
+    <form>
+        <input  type="button" style="margin:15px; background-color: navy; color: oldlace; " onclick="window.location.href='http://127.0.0.1:5000/dashboard/KADOC069';" value="GO BACK"/>
+      </form>
+    
+
+    </div>
+    
+
+</body>
+</html>
